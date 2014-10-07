@@ -5,11 +5,13 @@ public class BusinessDelegate {
 	private static BusinessDelegate myInstance;
 	private ProductServiceBusinessDelegate productServiceBusinessDelegate;
 	private CategoryServiceBusinessDelegate categoryServiceBusinessDelegate;
+	private UsersServiceBusinessDelegate usersServiceBusinessDelegate;
 
 	private BusinessDelegate() {
 
 		productServiceBusinessDelegate = new ProductServiceBusinessDelegate();
 		categoryServiceBusinessDelegate = new CategoryServiceBusinessDelegate();
+		usersServiceBusinessDelegate = new UsersServiceBusinessDelegate();
 	}
 
 	public static BusinessDelegate getInstance() {
@@ -27,5 +29,11 @@ public class BusinessDelegate {
 	public CategoryServiceBusinessDelegate getCategoryServiceBusinessDelegate() {
 		return categoryServiceBusinessDelegate;
 	}
+
+	public UsersServiceBusinessDelegate getUsersServiceBusinessDelegate() {
+		return usersServiceBusinessDelegate;
+	}
+	
+	
 	
 }
