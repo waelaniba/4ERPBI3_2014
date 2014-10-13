@@ -14,4 +14,5 @@ public interface CategoryMgmRemote {
 	public Category findCategory (int idCategory);
 	public void deleteCategory(Category c);
 	public List<Category> findAll();
+	public List<Category> findRangeOfCategories(int first, int max);
 }

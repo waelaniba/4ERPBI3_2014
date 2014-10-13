@@ -6,12 +6,14 @@ public class BusinessDelegate {
 	private ProductServiceBusinessDelegate productServiceBusinessDelegate;
 	private CategoryServiceBusinessDelegate categoryServiceBusinessDelegate;
 	private UsersServiceBusinessDelegate usersServiceBusinessDelegate;
+	private CartServiceBusinessDelegate cartServiceBusinessDelegate;
 
 	private BusinessDelegate() {
 
 		productServiceBusinessDelegate = new ProductServiceBusinessDelegate();
 		categoryServiceBusinessDelegate = new CategoryServiceBusinessDelegate();
 		usersServiceBusinessDelegate = new UsersServiceBusinessDelegate();
+		cartServiceBusinessDelegate = new CartServiceBusinessDelegate();
 	}
 
 	public static BusinessDelegate getInstance() {
@@ -33,7 +35,9 @@ public class BusinessDelegate {
 	public UsersServiceBusinessDelegate getUsersServiceBusinessDelegate() {
 		return usersServiceBusinessDelegate;
 	}
-	
-	
+
+	public CartServiceBusinessDelegate getCartServiceBusinessDelegate() {
+		return cartServiceBusinessDelegate;
+	}
 	
 }

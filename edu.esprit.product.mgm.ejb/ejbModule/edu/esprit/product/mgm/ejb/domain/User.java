@@ -12,7 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +39,9 @@ public class User implements Serializable {
 	private String password;
 	@Column(name = "PHONE_USER")
 	private String phoneNumber;
+	@OneToOne
+	@JoinColumn(name = "ADDRESS_FK")
+	private Address address;
 	
 	public int getIdUser() {
 		return idUser;
@@ -74,10 +79,11 @@ public class User implements Serializable {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
-	
-	
-	
-	
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 }

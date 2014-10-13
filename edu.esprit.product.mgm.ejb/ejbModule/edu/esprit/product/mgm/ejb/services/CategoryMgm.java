@@ -58,4 +58,15 @@ public class CategoryMgm implements CategoryMgmRemote {
 		return  (List<Category>) typedQuery.getResultList();
 	}
 
+	@Override
+	public List<Category> findRangeOfCategories(int first, int max) {
+		
+		TypedQuery<Category> tQuery = em.createNamedQuery("findAllCategories", Category.class);
+		
+		tQuery.setFirstResult(first);
+		tQuery.setMaxResults(max);
+		
+		return tQuery.getResultList();
+	}
+
 }

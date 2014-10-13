@@ -51,4 +51,15 @@ public class CategoryServiceBusinessDelegate {
 
 		return categoryMgmRemote.findAll();
 	}
+	
+
+	
+	public List<Category> findRangeOfCategories(int first, int max) {
+		CategoryMgmRemote categoryMgmRemote = (CategoryMgmRemote) ServiceLocator
+				.getInstance()
+				.lookupProxy(
+						"/edu.esprit.product.mgm.ejb/CategoryMgm!edu.esprit.product.mgm.ejb.services.CategoryMgmRemote");
+
+		return categoryMgmRemote.findRangeOfCategories(first, max);
+	}
 }

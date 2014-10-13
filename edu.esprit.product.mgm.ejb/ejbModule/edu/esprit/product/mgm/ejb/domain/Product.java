@@ -1,6 +1,8 @@
 package edu.esprit.product.mgm.ejb.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -33,6 +36,8 @@ public class Product implements Serializable{
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "CATEGORY_FK")
 	private Category category;
+	@OneToMany(mappedBy = "product")
+	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	/** serialVersionUID */
 	private static final long serialVersionUID = 5634736912185698142L;
@@ -71,6 +76,14 @@ public class Product implements Serializable{
 		this.category = category;
 	}
 	
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
 	/**
 	 * management of both parts of the association
 	 * between Product and Category 

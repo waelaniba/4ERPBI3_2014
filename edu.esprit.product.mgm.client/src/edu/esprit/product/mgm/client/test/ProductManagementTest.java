@@ -5,16 +5,19 @@ import static org.junit.Assert.*;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.LazyInitializationException;
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.esprit.product.mgm.client.utils.BusinessDelegate;
+import edu.esprit.product.mgm.client.utils.CartServiceBusinessDelegate;
 import edu.esprit.product.mgm.client.utils.CategoryServiceBusinessDelegate;
 import edu.esprit.product.mgm.client.utils.ProductServiceBusinessDelegate;
 import edu.esprit.product.mgm.client.utils.UsersServiceBusinessDelegate;
 import edu.esprit.product.mgm.ejb.domain.Administrator;
 import edu.esprit.product.mgm.ejb.domain.Category;
 import edu.esprit.product.mgm.ejb.domain.Customer;
+import edu.esprit.product.mgm.ejb.domain.Department;
 import edu.esprit.product.mgm.ejb.domain.Product;
 import edu.esprit.product.mgm.ejb.domain.User;
 
@@ -23,6 +26,7 @@ public class ProductManagementTest {
 	ProductServiceBusinessDelegate productServiceBusinessDelegate;
 	CategoryServiceBusinessDelegate categoryServiceBusinessDelegate;
 	UsersServiceBusinessDelegate usersServiceBusinessDelegate;
+	CartServiceBusinessDelegate cartServiceBusinessDelegate;
 	
 	
 	@Before
@@ -31,13 +35,14 @@ public class ProductManagementTest {
 		productServiceBusinessDelegate = BusinessDelegate.getInstance().getProductServiceBusinessDelegate();
 		categoryServiceBusinessDelegate = BusinessDelegate.getInstance().getCategoryServiceBusinessDelegate();
 		usersServiceBusinessDelegate = BusinessDelegate.getInstance().getUsersServiceBusinessDelegate();
+		cartServiceBusinessDelegate = BusinessDelegate.getInstance().getCartServiceBusinessDelegate();
 	}
 
 	@Test
 	public void test01_itShouldAddProduct() {
 		
 		Product product = new Product();
-		product.setDesignation("Sony");
+		product.setDesignation("HP");
 		product.setSerialNumber("ASDF212154i");
 		productServiceBusinessDelegate.addProduct(product);
 		
@@ -54,8 +59,11 @@ public class ProductManagementTest {
 	@Test
 	public void test03_itShouldUpdtateProduct() {
 		
-		Product product = productServiceBusinessDelegate.findProduct(1);
-		product.setDesignation("HP");
+		Product product = new Product();
+		product.setIdProduct(1);
+		product.setDesignation("AAA");
+		product.setSerialNumber("4545765454");
+		
 		productServiceBusinessDelegate.updateProduct(product);
 	}
 	
@@ -71,7 +79,7 @@ public class ProductManagementTest {
 	public void test05_itShouldAddCategory() {
 		
 		Category category = new Category();
-		category.setDesignation("Laptop"); 
+		category.setDesignation("Screen"); 
 		categoryServiceBusinessDelegate.addCategory(category);
 	}
 	
@@ -80,8 +88,8 @@ public class ProductManagementTest {
 		
 		Category category = categoryServiceBusinessDelegate.findCategory(1);
 		Product product = new Product();
-		product.setDesignation("Sony");
-		product.setSerialNumber("ASDF212154i");
+		product.setDesignation("HP");
+		product.setSerialNumber("ASDF21");
 		
 		productServiceBusinessDelegate.addProductCategory(product, category);
 	}
@@ -124,7 +132,7 @@ public class ProductManagementTest {
 	public void test10_itShouldFindAllCategories() {
 		
 		List<Category> categories = categoryServiceBusinessDelegate.findAll();
-		assertEquals(1, categories.size());
+		assertEquals(6, categories.size());
 	}
 	
 	@Test
@@ -216,8 +224,75 @@ public class ProductManagementTest {
 			
 		}
 		
-
 	}
+		
+		
+		@Test
+		public void test16_itShouldgetCategory(){
+			
+			Product p =new Product();
+			p.setIdProduct(1);
+			assertEquals("SmartPhone", productServiceBusinessDelegate.getProductCategory(p).getDesignation() );
+				
+			}
+		
+
+		@Test
+		public void test17_itShouldFindProductsForAGivenCategoryLazilly() {
+			
+			Category category = new Category();
+			category.setIdCategory(1);
+			List<Product> products = productServiceBusinessDelegate.getCategoryProductsLazilly(category);
+			
+			assertEquals(1, products.size());
+			
+		}
+		
+		@Test
+		public void test18_itShouldFindAllDepartmentAddresses() {
+			
+			Department dept = new Department();
+			dept.setName("Informatique");
+			
+			assertEquals(3, usersServiceBusinessDelegate.getDepartmentAddresses(dept).size() );
+			
+		}
+		
+		
+		@Test
+		public void test19_itShouldAddNewTransaction() {
+
+			Customer customer = (Customer) usersServiceBusinessDelegate.findUser(1);
+			
+			Product p1 = productServiceBusinessDelegate.findProduct(1);
+			Product p2 = productServiceBusinessDelegate.findProduct(2);
+			
+			cartServiceBusinessDelegate.addProductToCart(p1, 5);
+			cartServiceBusinessDelegate.addProductToCart(p2, 7);
+			
+			cartServiceBusinessDelegate.doPurchase(customer);
+			
+			
+		}
+		
+		@Test
+		public void test20_itShouldfindRangeOfCategories() {
+
+
+
+			List<Category> categories = categoryServiceBusinessDelegate.findRangeOfCategories(3, 3);
+			
+			for(Category cat : categories){
+				
+				
+				System.out.println("Category : " + cat.getDesignation());
+				
+			}
+			
+			
+		}
+		
+		
 	
 
 }

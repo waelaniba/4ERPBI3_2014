@@ -17,6 +17,8 @@ public interface ProductMgmRemote {
 	public List<Product> findAll();
 	public void addProductWithCategory(Product p, Category c);
 	public void addProductWithNewCategory(Product p, Category c);
+	public Category getProductCategory(Product p);
+	List<Product> findCategoryProductsLazilly(Category category);
 	
 
 }

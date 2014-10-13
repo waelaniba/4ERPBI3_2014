@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,6 +20,9 @@ public class Administrator extends User implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "REC_DATE")
 	private Date recruitementDate;
+	@ManyToOne
+	@JoinColumn(name = "DEPARTMENT_FK")
+	private Department department;
 
 	public Date getRecruitementDate() {
 		return recruitementDate;
@@ -26,5 +31,12 @@ public class Administrator extends User implements Serializable {
 	public void setRecruitementDate(Date recruitementDate) {
 		this.recruitementDate = recruitementDate;
 	}
-	
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
 }

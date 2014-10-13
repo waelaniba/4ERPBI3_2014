@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.TypedQuery;
 
 /**
  * Entity implementation class for Entity: Category
@@ -30,7 +34,7 @@ public class Category implements Serializable {
 	@Column(name = "DESIG_CATEGORY")
 	private String designation;
 	private static final long serialVersionUID = 1L;
-	@OneToMany(mappedBy = "category", orphanRemoval = true, fetch = FetchType.EAGER)//Doesn't work with Cascade.REMOVE!
+	@OneToMany(mappedBy = "category", orphanRemoval = true, fetch = FetchType.LAZY)//Doesn't work with Cascade.REMOVE!
 	private List<Product> products = new ArrayList<Product>();
 
 	public Category() {

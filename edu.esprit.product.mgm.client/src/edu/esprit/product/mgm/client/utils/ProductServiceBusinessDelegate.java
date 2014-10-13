@@ -97,5 +97,25 @@ public class ProductServiceBusinessDelegate {
 
 		return prods;
 	}
+	
+	public Category getProductCategory(Product p) {
+
+		ProductMgmRemote producmMgmRemote = (ProductMgmRemote) ServiceLocator
+				.getInstance()
+				.lookupProxy(
+						"/edu.esprit.product.mgm.ejb/ProductMgm!edu.esprit.product.mgm.ejb.services.ProductMgmRemote");
+		
+		return producmMgmRemote.getProductCategory(p);
+	}
+
+	public List<Product> getCategoryProductsLazilly(Category c) {
+
+		ProductMgmRemote producmMgmRemote = (ProductMgmRemote) ServiceLocator
+				.getInstance()
+				.lookupProxy(
+						"/edu.esprit.product.mgm.ejb/ProductMgm!edu.esprit.product.mgm.ejb.services.ProductMgmRemote");
+		
+		return producmMgmRemote.findCategoryProductsLazilly(c);
+	}
 
 }
